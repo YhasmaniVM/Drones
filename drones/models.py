@@ -11,7 +11,7 @@ PERCENTAGE_VALIDATOR = [MinValueValidator(0), MaxValueValidator(100)]
 
 class Medication(models.Model):
     name = models.CharField(max_length=32, validators=[CUSTOM_NAME])
-    weight = models.IntegerField()
+    weight = models.IntegerField(null=True)
     code = models.CharField(max_length=32, validators=[CUSTOM_CODE])
     image = models.FileField(upload_to='uploads/%Y/%m/%d/', null=True)
 
@@ -39,7 +39,7 @@ class Drones(models.Model):
     weight = models.IntegerField(null=True, validators=[MaxValueValidator(500)])
     battery = models.DecimalField(max_digits=3, decimal_places=0, default=Decimal(0), validators=PERCENTAGE_VALIDATOR)
     state = models.CharField(max_length=32, default='idle', choices=STATE)
-    medications = models.ManyToManyField(Medication, null=True)
+    medications = models.ManyToManyField(Medication, blank=True)
 
     def __str__(self):
         return self.serial_number + ' - ' + self.model

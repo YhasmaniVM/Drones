@@ -1,6 +1,6 @@
 from django.http import JsonResponse
-from .models import Drones
-from .serializers import DroneSerializer
+from .models import Drones, Medication
+from .serializers import DroneSerializer, MedicationSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
@@ -38,3 +38,17 @@ def drones_detail(request, id, format=None):
     elif request.method == 'DELETE':
         drones.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+@api_view(['GET', 'PUT', 'DELETE'])
+def drones_medication_detail(request, id, format=None):
+    try:
+        drones = Drones.objects.get(pk=id)
+    except Drones.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    if request.method == 'GET':
+        if drones.medications.all():
+            serializer = MedicationSerializer(drones.medications.all(), many=True)
+            return Response(serializer.data)
+        else:
+            return Response(status=status.HTTP_404_NOT_FOUND)
