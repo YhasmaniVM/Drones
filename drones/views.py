@@ -40,7 +40,7 @@ def drones_detail(request, id, format=None):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-@api_view(['GET', 'PUT', 'DELETE'])
+@api_view(['GET'])
 def drones_medication_detail(request, id, format=None):
     try:
         drones = Drones.objects.get(pk=id)
@@ -52,3 +52,25 @@ def drones_medication_detail(request, id, format=None):
             return Response(serializer.data)
         else:
             return Response(status=status.HTTP_404_NOT_FOUND)
+
+
+@api_view(['GET'])
+def drones_available(request, format=None):
+    if request.method == 'GET':
+        drones = Drones.objects.filter(state='idle')
+        if drones.exists():
+            serializer = DroneSerializer(drones, many=True)
+            return Response(serializer.data)
+        else:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+
+@api_view(['GET'])
+def drones_battery_detail(request, id, format=None):
+    try:
+        drones = Drones.objects.get(pk=id)
+    except Drones.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    if request.method == 'GET':
+        serializer = DroneSerializer(drones)
+        return Response({'battery': serializer.data.get('battery')})

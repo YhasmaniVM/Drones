@@ -22,7 +22,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('drones/', views.drones_list),
     path('drones/<int:id>', views.drones_detail),
-    path('drones/<int:id>/medications', views.drones_medication_detail)
+    path('drones/<int:id>/medications', views.drones_medication_detail),
+    path('drones/<int:id>/battery', views.drones_battery_detail),
+    path('drones/availables', views.drones_available),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
