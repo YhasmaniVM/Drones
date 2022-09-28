@@ -1,6 +1,6 @@
 from django.db import models
 from decimal import Decimal
-from django.core.validators import RegexValidator, MaxValueValidator, MinValueValidator
+from django.core.validators import RegexValidator, MaxValueValidator, MinValueValidator, validate_slug
 from django.core.exceptions import ValidationError
 from django.db.models import ForeignKey
 
@@ -10,7 +10,7 @@ PERCENTAGE_VALIDATOR = [MinValueValidator(0), MaxValueValidator(100)]
 
 
 class Medication(models.Model):
-    name = models.CharField(max_length=32, validators=[CUSTOM_NAME])
+    name = models.CharField(max_length=32, validators=[validate_slug])
     weight = models.IntegerField(null=True)
     code = models.CharField(max_length=32, validators=[CUSTOM_CODE])
     image = models.FileField(upload_to='uploads/%Y/%m/%d/', null=True)
