@@ -2,8 +2,9 @@
 
 ```bash
 How to Run:
- * python manage.py runserver  - Run django server.
- * python test_api.py          - Consume API test.
+ $ pip install -r requirements.txt -Install requirements
+ $ python manage.py runserver      - Run django server.
+ $ python test_api.py              - Consume API test.
 ```
 How api works?
 ***
