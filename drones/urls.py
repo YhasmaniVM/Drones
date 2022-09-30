@@ -16,9 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from drones import views
+from django.views import debug
 from rest_framework.urlpatterns import format_suffix_patterns
 
 urlpatterns = [
+    path('', debug.default_urlconf),
     path('admin/', admin.site.urls),
     path('drones/', views.drones_list),
     path('drones/<int:id>', views.drones_detail),
